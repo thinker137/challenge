@@ -1,0 +1,36 @@
+<view class="container">
+  <text class="section-title">所有预约数据</text>
+  <block wx:for="{{allBookings}}" wx:key="bookingId">
+    <view class="booking-item">
+      <view class="booking-info">
+        <text class="info-label">用户ID:</text>
+        <text class="info-value">{{item.userId}}</text>
+      </view>
+      <view class="booking-info">
+        <text class="info-label">昵称:</text>
+        <text class="info-value">{{item.nickName}}</text>
+      </view>
+      <view class="booking-info">
+        <text class="info-label">班车:</text>
+        <text class="info-value">{{item.bus}}</text>
+      </view>
+      <view class="booking-info">
+        <text class="info-label">日期:</text>
+        <text class="info-value">{{item.date}}</text>
+      </view>
+      <view class="booking-info">
+        <text class="info-label">时间:</text>
+        <text class="info-value">{{item.time}}</text>
+      </view>
+      <view class="booking-info">
+        <text class="info-label">预约编号:</text>
+        <text class="info-value">{{item.bookingId}}</text>
+      </view>
+      <view class="booking-info">
+        <text class="info-label">是否签到:</text>
+        <text class="info-value">{{item.checkedIn ? '是' : '否'}}</text>
+      </view>
+    </view>
+    <view class="divider"></view>
+  </block>
+</view>

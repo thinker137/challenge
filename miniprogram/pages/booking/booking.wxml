@@ -1,0 +1,35 @@
+<view class="container">
+
+<view class="user-info">
+  <image class="avatar" src="{{avatarUrl}}" mode="aspectFill" />
+  <text>{{nickName}}（{{userId}}）</text>
+</view>
+
+<view class="form-group">
+  <text>选择班车</text>
+  <picker mode="selector" range="{{busList}}" bindchange="onBusChange">
+    <view class="picker">{{selectedBus || '请选择班车'}}</view>
+  </picker>
+</view>
+
+<view class="form-group">
+  <text>选择日期</text>
+  <picker mode="date" bindchange="onDateChange" value="{{date}}">
+    <view class="picker">{{date || '请选择日期'}}</view>
+  </picker>
+</view>
+
+<view class="form-group">
+  <text>选择时间</text>
+  <picker mode="time" bindchange="onTimeChange" value="{{time}}">
+    <view class="picker">{{time}}</view>
+  </picker>
+</view>
+
+<button bindtap="submitBooking" type="primary">提交预约</button>
+
+<view wx:if="{{bookingSuccess}}" class="result">
+  <text>✅ 预约成功！编号：{{bookingId}}</text>
+</view>
+<button bindtap="goToMyBookings" type="default">查看我的预约</button>
+</view>

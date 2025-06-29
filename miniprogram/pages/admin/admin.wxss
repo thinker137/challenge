@@ -1,0 +1,69 @@
+.container {
+  padding: 30rpx;
+}
+
+.section {
+  margin-bottom: 40rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  color: #333;
+}
+
+.bus-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 0;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.bus-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.input-field {
+  border: 1rpx solid #ccc;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.action-button {
+  background-color: #007aff;
+  color: #fff;
+  padding: 20rpx 40rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.booking-record,
+.user-stats-record {
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 10rpx;
+  background-color: #f9f9f9;
+}
+
+.record-label {
+  font-size: 26rpx;
+  color: #666;
+  width: 180rpx;
+  display: inline-block;
+}
+
+.record-value {
+  font-size: 26rpx;
+  color: #333;
+}

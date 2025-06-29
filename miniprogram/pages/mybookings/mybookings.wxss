@@ -1,0 +1,17 @@
+.container {
+  padding: 20rpx;
+}
+
+.title {
+  font-size: 34rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.booking-card {
+  border: 1rpx solid #ccc;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  background-color: #f9f9f9;
+}

@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="section">
+    <text class="section-title">班车列表</text>
+    <block wx:for="{{busList}}" wx:key="id">
+      <view class="bus-item">
+        <text>{{item.name}}</text>
+        <button size="mini" data-id="{{item.id}}" bindtap="deleteBus">删除</button>
+      </view>
+    </block>
+  </view>
+
+  <view class="section">
+    <text class="section-title">添加新班车</text>
+    <input placeholder="输入班车名称" bindinput="onInputBusName" />
+    <button bindtap="addBus">添加</button>
+  </view>
+
+  <view class="section">
+    <text class="section-title">预约信息查看</text>
+    <button bindtap="viewBookings">查看所有预约</button>
+  </view>
+
+  <view class="section">
+    <text class="section-title">发车操作</text>
+    <button bindtap="markMissedRidersx">执行发车，处理失约</button>
+  </view>
+
+  <view class="section">
+    <text class="section-title">用户统计数据</text>
+    <block wx:for-items="{{Object.entries(userStats)}}" wx:key="0">
+      <view class="user-stats-item">
+        <text>用户ID: {{item[0]}}</text>
+        <text>取消历史: {{item[1].cancelHistory.join(', ')}}</text>
+        <text>失约次数: {{item[1].missedCount}}</text>
+        <text>封禁至: {{item[1].bannedUntil}}</text>
+      </view>
+    </block>
+  </view>
+</view>
