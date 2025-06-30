@@ -1,9 +1,0 @@
-<view class="container">
-  <text class="title">今日预约</text>
-  <block wx:for="{{todayBookings}}" wx:key="bookingId">
-    <view class="booking-item">
-      <text>{{item.time}} | {{item.bus}}</text>
-      <button size="mini" data-id="{{item.bookingId}}" bindtap="checkIn">我已上车</button>
-    </view>
-  </block>
-</view>
