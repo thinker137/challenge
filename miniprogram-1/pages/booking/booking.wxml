@@ -1,0 +1,87 @@
+<view class="container">
+
+<view class="user-info">
+  <image class="avatar" src="{{avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" />
+  <text>{{nickName}}（{{userId}}）</text>
+</view>
+
+<view class="form-group">
+  <text class="label">选择方向</text>
+  <picker mode="selector" range="{{directions}}" bindchange="onDirectionChange">
+    <view class="picker">{{selectedDirection || '请选择方向'}}</view>
+  </picker>
+</view>
+
+<view class="form-group">
+  <text class="label">选择日期</text>
+  <picker mode="date" bindchange="onDateChange" value="{{selectedDate}}">
+    <view class="picker">{{selectedDate}}</view>
+  </picker>
+</view>
+
+<view class="form-group" wx:if="{{availableBuses.length > 0}}">
+  <text class="label">选择班车</text>
+  <view class="bus-list">
+    <view 
+      class="bus-item {{selectedBusId === bus.id ? 'selected' : ''}}" 
+      wx:for="{{availableBuses}}" 
+      wx:key="id"
+      data-id="{{bus.id}}"
+      bindtap="onBusSelect"
+    >
+      <view class="bus-header">
+        <text class="bus-plate">{{bus.plateNumber}}</text>
+        <text class="bus-time">{{bus.departureTime}}</text>
+      </view>
+      <view class="bus-info">
+        <text>{{bus.driver}} {{bus.phone}}</text>
+      </view>
+      <view class="bus-route">
+        <text>{{bus.departureLocation}} → {{bus.arrivalLocation}}</text>
+      </view>
+      <view class="bus-cycle">
+        <text>{{bus.cycle}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="form-group" wx:if="{{availableBuses.length === 0 && selectedDirection}}">
+  <text class="no-bus-tip">该方向当天没有可用班车</text>
+</view>
+
+<button 
+  bindtap="submitBooking" 
+  type="primary" 
+  disabled="{{!selectedBusId || availableBuses.length === 0}}"
+>
+  提交预约
+</button>
+
+<view wx:if="{{bookingSuccess}}" class="result">
+  <text class="success-tip">✅ 预约成功！编号：{{bookingId}}</text>
+  <view class="booking-details">
+    <text>方向：{{selectedDirection}}</text>
+    <text>日期：{{selectedDate}}</text>
+    <text wx:if="{{selectedBusId}}">
+      班车：{{getBusInfo(availableBuses, selectedBusId).plateNumber || '未知'}} 
+      {{getBusInfo(availableBuses, selectedBusId).departureTime || '未知'}}
+    </text>
+  </view>
+</view>
+
+<button bindtap="goToMyBookings" type="default">查看我的预约</button>
+
+<!-- 添加WXS模块 -->
+<wxs module="utils">
+  function getBusInfo(buses, id) {
+    for (var i = 0; i < buses.length; i++) {
+      if (buses[i].id === id) {
+        return buses[i];
+      }
+    }
+    return {};
+  }
+  module.exports.getBusInfo = getBusInfo;
+</wxs>
+</view>

@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/info/info",
+    "pages/booking/booking",
+    "pages/admin/admin",
+    "pages/admin/bookings/bookings",
+    "pages/mybookings/mybookings",
+    "pages/checkin/checkin",
+    "pages/admin/missed",
+    "pages/booking/bus-data.js",
+    "pages/booking/bus-data",
+    "utils/bus-data",
+    "pages/booking/utils/bus-data"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "预约",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

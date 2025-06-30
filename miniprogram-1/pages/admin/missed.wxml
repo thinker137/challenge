@@ -1,0 +1,9 @@
+<view class="container">
+  <text class="title">失约名单</text>
+  <block wx:for="{{missedUsers}}" wx:key="userId">
+    <view class="missed-item">
+      <text>{{item.userId}}（{{item.nickName}}） - 未签到 {{item.missedCount}} 次</text>
+      <text wx:if="{{item.bannedUntil}}">惩罚至：{{item.bannedUntil}}</text>
+    </view>
+  </block>
+</view>

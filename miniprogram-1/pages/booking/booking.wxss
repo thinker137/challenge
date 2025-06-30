@@ -1,0 +1,111 @@
+.container {
+  padding: 20rpx;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #f8f8f8;
+  border-radius: 10rpx;
+  margin-bottom: 30rpx;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.label {
+  display: block;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.picker {
+  padding: 15rpx;
+  border: 1rpx solid #e5e5e5;
+  border-radius: 8rpx;
+  background-color: #fff;
+  color: #666;
+}
+
+.bus-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.bus-item {
+  padding: 20rpx;
+  border: 1rpx solid #e5e5e5;
+  border-radius: 10rpx;
+  background-color: #fff;
+}
+
+.bus-item.selected {
+  border-color: #07c160;
+  background-color: #f0fff4;
+}
+
+.bus-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+
+.bus-plate {
+  font-weight: bold;
+  color: #333;
+}
+
+.bus-time {
+  color: #07c160;
+}
+
+.bus-info, .bus-route, .bus-cycle {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+}
+
+.no-bus-tip {
+  display: block;
+  padding: 20rpx;
+  text-align: center;
+  color: #999;
+  background-color: #f8f8f8;
+  border-radius: 10rpx;
+}
+
+button {
+  margin-top: 20rpx;
+}
+
+.result {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background-color: #f0fff4;
+  border-radius: 10rpx;
+  border: 1rpx solid #07c160;
+}
+
+.success-tip {
+  display: block;
+  margin-bottom: 15rpx;
+  color: #07c160;
+  font-weight: bold;
+}
+
+.booking-details text {
+  display: block;
+  margin-bottom: 5rpx;
+  color: #666;
+}

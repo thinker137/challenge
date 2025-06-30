@@ -1,0 +1,197 @@
+<view class="container">
+  <view class="header">
+    <text class="title">班车预约管理系统 - 管理员界面</text>
+  </view>
+
+  <view class="function-buttons">
+    <button bindtap="goToBookings" type="primary">查看所有预约</button>
+    <button bindtap="goToStatistics" type="default">查看统计信息</button>
+    <button bindtap="goToBusManagement" type="default">班车管理</button>
+    <button bindtap="logout" type="warn">退出登录</button>
+  </view>
+
+  <view class="admin-info">
+    <text>当前管理员：{{adminName}}</text>
+  </view>
+
+  <view class="section" wx:if="{{currentPage === 'bookings'}}">
+    <text class="section-title">所有预约数据</text>
+    <view class="search-bar">
+      <input type="text" placeholder="搜索用户ID/姓名" bindinput="onSearchInput" />
+      <button bindtap="searchBookings">搜索</button>
+    </view>
+    <view class="filter-options">
+      <picker mode="date" bindchange="onFilterDateChange" value="{{filterDate}}">
+        <view class="picker">筛选日期：{{filterDate || '全部日期'}}</view>
+      </picker>
+      <picker mode="selector" range="{{directionOptions}}" bindchange="onFilterDirectionChange" value="{{filterDirectionIndex}}">
+        <view class="picker">筛选方向：{{filterDirection || '全部方向'}}</view>
+      </picker>
+      <picker mode="selector" range="{{checkinOptions}}" bindchange="onFilterCheckinChange" value="{{filterCheckinIndex}}">
+        <view class="picker">筛选状态：{{filterCheckin || '全部状态'}}</view>
+      </picker>
+      <button bindtap="clearFilters">清除筛选</button>
+    </view>
+    
+    <view class="booking-list">
+      <block wx:for="{{filteredBookings}}" wx:key="bookingId">
+        <view class="booking-item">
+          <view class="booking-info-row">
+            <view class="info-pair">
+              <text class="info-label">用户ID:</text>
+              <text class="info-value">{{item.userId}}</text>
+            </view>
+            <view class="info-pair">
+              <text class="info-label">昵称:</text>
+              <text class="info-value">{{item.nickName}}</text>
+            </view>
+          </view>
+          
+          <view class="booking-info-row">
+            <view class="info-pair">
+              <text class="info-label">方向:</text>
+              <text class="info-value">{{item.direction}}</text>
+            </view>
+            <view class="info-pair">
+              <text class="info-label">日期:</text>
+              <text class="info-value">{{item.date}}</text>
+            </view>
+          </view>
+          
+          <view class="booking-info-row">
+            <view class="info-pair">
+              <text class="info-label">车牌:</text>
+              <text class="info-value">{{item.busInfo.plateNumber}}</text>
+            </view>
+            <view class="info-pair">
+              <text class="info-label">时间:</text>
+              <text class="info-value">{{item.busInfo.departureTime}}</text>
+            </view>
+          </view>
+          
+          <view class="booking-info-row">
+            <view class="info-pair">
+              <text class="info-label">司机:</text>
+              <text class="info-value">{{item.busInfo.driver}}</text>
+            </view>
+            <view class="info-pair">
+              <text class="info-label">电话:</text>
+              <text class="info-value">{{item.busInfo.phone}}</text>
+            </view>
+          </view>
+          
+          <view class="booking-info-row">
+            <view class="info-pair">
+              <text class="info-label">预约编号:</text>
+              <text class="info-value">{{item.bookingId}}</text>
+            </view>
+            <view class="info-pair">
+              <text class="info-label">状态:</text>
+              <text class="info-value {{item.checkedIn ? 'checked-in' : 'not-checked-in'}}">
+                {{item.checkedIn ? '已签到' : '未签到'}}
+              </text>
+            </view>
+          </view>
+          
+          <view class="booking-actions" wx:if="{{!item.checkedIn}}">
+            <button bindtap="checkInBooking" data-bookingid="{{item.bookingId}}" type="primary">标记为已签到</button>
+            <button bindtap="cancelBooking" data-bookingid="{{item.bookingId}}" type="warn">取消预约</button>
+          </view>
+        </view>
+        <view class="divider"></view>
+      </block>
+    </view>
+    
+    <view class="empty-list-tip" wx:if="{{filteredBookings.length === 0}}">
+      <text>暂无符合条件的预约记录</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{currentPage === 'statistics'}}">
+    <text class="section-title">预约统计信息</text>
+    <view class="stats-cards">
+      <view class="stats-card">
+        <text class="card-title">今日预约总数</text>
+        <text class="card-value">{{todayBookingsCount}}</text>
+      </view>
+      <view class="stats-card">
+        <text class="card-title">本周预约总数</text>
+        <text class="card-value">{{weekBookingsCount}}</text>
+      </view>
+      <view class="stats-card">
+        <text class="card-title">本月预约总数</text>
+        <text class="card-value">{{monthBookingsCount}}</text>
+      </view>
+      <view class="stats-card">
+        <text class="card-title">总预约数</text>
+        <text class="card-value">{{totalBookingsCount}}</text>
+      </view>
+    </view>
+    
+    <view class="direction-stats">
+      <text class="stats-subtitle">方向分布</text>
+      <view class="direction-chart">
+        <view class="chart-item" style="width: {{directionRatio[0]}}%">
+          <text>{{directionLabels[0]}} ({{directionCounts[0]}})</text>
+        </view>
+        <view class="chart-item" style="width: {{directionRatio[1]}}%">
+          <text>{{directionLabels[1]}} ({{directionCounts[1]}})</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="time-stats">
+      <text class="stats-subtitle">时段分布</text>
+      <view class="time-chart">
+        <block wx:for="{{timeDistribution}}" wx:key="time">
+          <view class="time-bar">
+            <text class="time-label">{{item.time}}</text>
+            <view class="bar-container">
+              <view class="bar" style="width: {{item.percentage}}%"></view>
+            </view>
+            <text class="time-value">{{item.count}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{currentPage === 'busManagement'}}">
+    <text class="section-title">班车管理</text>
+    <button bindtap="addNewBus" type="primary">添加新班车</button>
+    
+    <view class="bus-list">
+      <block wx:for="{{allBuses}}" wx:key="id">
+        <view class="bus-item">
+          <view class="bus-header">
+            <text class="bus-id">{{item.id}}</text>
+            <text class="bus-plate">{{item.plateNumber}}</text>
+          </view>
+          <view class="bus-info">
+            <text>司机: {{item.driver}} ({{item.phone}})</text>
+          </view>
+          <view class="bus-route">
+            <text>路线: {{item.direction}}</text>
+          </view>
+          <view class="bus-schedule">
+            <text>时间: {{item.departureTime}}</text>
+            <text>周期: {{item.cycle}}</text>
+          </view>
+          <view class="bus-locations">
+            <text>出发: {{item.departureLocation}}</text>
+            <text>到达: {{item.arrivalLocation}}</text>
+          </view>
+          <view class="bus-actions">
+            <button bindtap="editBus" data-busid="{{item.id}}" type="default">编辑</button>
+            <button bindtap="deleteBus" data-busid="{{item.id}}" type="warn">删除</button>
+          </view>
+        </view>
+        <view class="divider"></view>
+      </block>
+    </view>
+    
+    <view class="empty-list-tip" wx:if="{{allBuses.length === 0}}">
+      <text>暂无班车信息</text>
+    </view>
+  </view>
+</view>
